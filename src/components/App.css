@@ -1,0 +1,10 @@
+body {
+    background: #EBF2F8;
+}
+
+input {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    background-color: transparent;
+}
