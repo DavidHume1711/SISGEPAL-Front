@@ -1,19 +1,39 @@
 import './loginComponent.css';
 import loginIcon from './img/sign-in.png'
 import { useRef } from 'react';
+import { doLoginRequest } from '../../api/request';
+import { saveToken, decodeToken } from '../../utils';
+import { connect } from 'react-redux';
+import { updateSession } from '../../react_redux/slices/sessionSlide';
 
-const doLogin = (ev,input_user, input_password) => {
-    const user = input_user.current.value;
+const doLogin = async (ev,input_user, input_password, updateSession) => {
+    const username = input_user.current.value;
     const password = input_password.current.value;
 
-    if(user && password) {
-        console.log(`USER: ${user} - PASSWORD: ${password}`)
+    if(username && password) {
         ev.preventDefault();
+        doLoginRequest({username, password})
+        .then(({token,error}) => {
+            if(error) {
+                alert(error);
+                return;
+            }
+            saveToken(token);
+            const user = decodeToken();
+            console.log('DOCODE TOKEN',user)
+            updateSession({isSession: true,user});
+        })
     }
 
 }
 
-export const LoginComponent = () => {
+const mapDispatchToProps = (dispatcher) => {
+    return {
+        updateSession: (payload) => dispatcher(updateSession(payload))
+    }
+}
+
+const LoginComponent = (props) => {
 
     const input_user = useRef();
     const input_password = useRef();
@@ -37,7 +57,7 @@ export const LoginComponent = () => {
                         </div>
                         <div className="button mt-5">
                             <button className="mx-auto d-block btn-login" title='Iniciar sesión'
-                                onClick={ev => doLogin(ev,input_user, input_password)}>
+                                onClick={ev => doLogin(ev,input_user, input_password, props.updateSession)}>
                                 <img src={loginIcon} alt="Login icon"/>
                             </button>
                         </div>
@@ -49,3 +69,5 @@ export const LoginComponent = () => {
         </>
     </>
 }
+
+export default connect(null, mapDispatchToProps)(LoginComponent);

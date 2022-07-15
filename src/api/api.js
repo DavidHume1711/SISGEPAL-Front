@@ -1,17 +1,17 @@
 import endpoints from './endpoints.json';
 import environment from './environment.json';
 
-export default function getAPI() {
+export function getAPI() {
     let url;
     switch(process.env.NODE_ENV) {
         case 'development': 
-            url = environment.develop;
+            url = environment.develop.url;
             break;
         case 'test': 
-            url = environment.test;
+            url = environment.test.url;
             break;
         case 'production': 
-            url = environment.production;  
+            url = environment.production.url;  
             break;
         default:
             url = null;  

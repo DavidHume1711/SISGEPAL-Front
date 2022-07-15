@@ -9,12 +9,12 @@ export const sessionSlice = createSlice({
     name: 'session',
     initialState,
     reducers : {
-        updateSession: (state, {payload: {session, user}}) => {
+        updateSession: (state, {payload: {isSession, user}}) => {
             state.isSession = true;
             state.user = user;
         },
         removeSession: (state) => {
-            state.session = false;
+            state.isSession = false;
             state.user = null;
         }
     }
