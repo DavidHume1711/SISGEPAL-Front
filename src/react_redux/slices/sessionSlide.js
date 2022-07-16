@@ -2,8 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { getToken, decodeToken } from "../../utils";
 const setInitialState = ()=> {
     const token = getToken();
-    const isSession = typeof token != 'undefined';
-    console.log("TOKEEN: "+token);
+    const isSession = token != null;
     return {
         isSession,
         user: isSession ? decodeToken(token) : null

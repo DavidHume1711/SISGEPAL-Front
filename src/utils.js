@@ -9,5 +9,10 @@ export const saveToken = (token) => {
 }
 
 export const decodeToken = () => {
-    return jwtDecode(getToken());
+    if(typeof getToken() != 'object'){
+        return jwtDecode(getToken());
+    }
+
+    return null;
+    
 }
