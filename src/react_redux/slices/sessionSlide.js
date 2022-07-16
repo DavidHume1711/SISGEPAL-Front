@@ -1,10 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
-
-const initialState = {
-    isSession: false,
-    user: null
+import { getToken, decodeToken } from "../../utils";
+const setInitialState = ()=> {
+    const token = getToken();
+    const isSession = typeof token != 'undefined';
+    console.log("TOKEEN: "+token);
+    return {
+        isSession,
+        user: isSession ? decodeToken(token) : null
+    }
 }
-
+const initialState = setInitialState();
 export const sessionSlice = createSlice({
     name: 'session',
     initialState,
