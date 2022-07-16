@@ -6,8 +6,28 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { connect } from 'react-redux';
+import { updateEmpleado } from '../../react_redux/slices/empleadoSlice';
 
-export  function EmpleadosTableComponent({empleados}) {
+const onSelectEmpleado = (ev, dispatch) => {
+  const dataEmp = [];
+  ev.querySelectorAll("td").forEach((tdEmpleado,index) => {
+    dataEmp[index] = tdEmpleado.innerText ;
+  });
+  const newEmpleadoState = {
+    empleado_id: dataEmp[0],
+    cedula: dataEmp[1],
+    nombre: dataEmp[2],
+    correo: dataEmp[3],
+    direccion: dataEmp[4],
+    telefono: dataEmp[5]
+  }
+  console.log(newEmpleadoState)
+  dispatch(newEmpleadoState);
+}
+
+ function EmpleadosTableComponent(props) {
+  const empleados = props.empleados;
   return (
       <TableContainer component={Paper}>
         <Table sx={{ maxWidth: '100%'}} aria-label="simple table">
@@ -25,9 +45,11 @@ export  function EmpleadosTableComponent({empleados}) {
             {empleados.map((row) => (
               <TableRow
                 key={row.empleado_id}
+                id= {row.empleado_id}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                onClick={ev => onSelectEmpleado(ev.currentTarget, props.updateEmpleado)}
               >
-                <TableCell component="th" scope="row">
+                <TableCell align="center">
                   {row.empleado_id}
                 </TableCell>
                 <TableCell align="center">{row.cedula}</TableCell>
@@ -42,3 +64,10 @@ export  function EmpleadosTableComponent({empleados}) {
       </TableContainer>
   );
 }
+
+const mapToDispathToProps = (dispatcher) => {
+  return {
+    updateEmpleado : (payload) => dispatcher(updateEmpleado(payload))
+  }
+}
+export default connect(null,mapToDispathToProps)(EmpleadosTableComponent)

@@ -3,10 +3,11 @@ import { FormControl,InputLabel, Input  } from '@mui/material';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { doGetEmpleadosRequest } from '../../api/request';
-import { EmpleadosTableComponent } from '../empleadosTableComponent/empleadosTableComponent';
-
+import EmpleadosTableComponent from '../empleadosTableComponent/empleadosTableComponent';
+import {useSelector} from 'react-redux'
 export const EmpleadosTabComponent = () => {
 
+    const empleado = useSelector(state => state.empleado)
     const [empleados, setEmpleados] = useState(null);
 
     useEffect(()=>{
@@ -27,23 +28,23 @@ export const EmpleadosTabComponent = () => {
             <div className='col-3 d-flex gap-3 flex-column form-container'>
                 <FormControl>
                     <InputLabel htmlFor='cedula' >Cédula</InputLabel>
-                    <Input name='cedula'></Input>
+                    <Input name='cedula' value={empleado.cedula}></Input>
                 </FormControl>
                 <FormControl>
                     <InputLabel htmlFor='nombre' >Nombre</InputLabel>
-                    <Input name='nombre'></Input>
+                    <Input name='nombre' value={empleado.nombre}></Input>
                 </FormControl>
                 <FormControl>
-                    <InputLabel htmlFor='correo' >Correo</InputLabel>
-                    <Input name='correo'></Input>
+                    <InputLabel htmlFor='correo1' >Correo</InputLabel>
+                    <Input name='correo1' value={empleado.correo}></Input>
                 </FormControl>
                 <FormControl>
                     <InputLabel htmlFor='direccion' >Direccion</InputLabel>
-                    <Input name='direccion'></Input>
+                    <Input name='direccion'  value={empleado.direccion}></Input>
                 </FormControl>
                 <FormControl>
                     <InputLabel htmlFor='telefono' >Teléfono</InputLabel>
-                    <Input name='telefono'></Input>
+                    <Input name='telefono' value={empleado.telefono}></Input>
                 </FormControl>
             </div>
 
