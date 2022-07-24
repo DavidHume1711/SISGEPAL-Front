@@ -1,29 +1,16 @@
 import './empleadosTabComponent.css'
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { doGetEmpleadosRequest, doPutEmpleadosRequest } from '../../api/request';
+import { doGetEmpleadosRequest, doPutEmpleadosRequest, doPostEmpleadosRequest } from '../../api/request';
 import EmpleadosTableComponent from '../empleadosTableComponent/empleadosTableComponent';
 import {useSelector} from 'react-redux'
 import { connect } from 'react-redux/es/exports';
 import { updateEmpleado } from '../../react_redux/slices/empleadoSlice';
 
-const clearInputs = () => {
-    document.getElementById("empleado_id").value = null;
-    document.getElementById("empleado_cedula").value = null;
-    document.getElementById("empleado_nombre").value = null;
-    document.getElementById("empleado_correo").value = null;
-    document.getElementById("empleado_direccion").value = null;
-    document.getElementById("empleado_telefono").value = null;
-}
 
-const doUpdateEmpleado = async(ev,setEmpleados) => {
-    const id = document.getElementById("empleado_id").value;
-    const cedula = document.getElementById("empleado_cedula").value;
-    const nombre = document.getElementById("empleado_nombre").value;
-    const correo = document.getElementById("empleado_correo").value;
-    const direccion = document.getElementById("empleado_direccion").value;
-    const telefono = document.getElementById("empleado_telefono").value;
-    
+const doUpdateEmpleado = async(ev,setEmpleados, updateEmpleado,empleado) => {
+    const {id,cedula,nombre,correo,direccion,telefono} = empleado;
+
     if(id && cedula && nombre && correo && direccion && telefono){  
         ev.preventDefault();
         
@@ -33,7 +20,28 @@ const doUpdateEmpleado = async(ev,setEmpleados) => {
             if(res) {
                 getEmpleados(setEmpleados);
                 alert(`SE ACTUALIZÓ EL EMPLEADO CON ID ${id}`);
-                clearInputs();
+                updateEmpleado();
+            }
+        })
+        
+    } 
+
+
+}
+
+const doCreateEmpleado = async(ev,setEmpleados,updateEmpleado, empleado) => {
+    const {cedula,nombre,correo,direccion,telefono,usuario} = empleado;
+    
+    if(cedula && nombre && correo && direccion && telefono && usuario){  
+        ev.preventDefault();
+        
+        const empleado_dto  = {cedula,nombre,correo,direccion,telefono,username: usuario}
+        doPostEmpleadosRequest(empleado_dto)
+        .then(({empleado_id}) => {
+            if(empleado_id) {
+                getEmpleados(setEmpleados);
+                alert(`SE CRÉO EL EMPLEADO Y LE FUE ASIGNADO EL ID ${empleado_id}`);
+                updateEmpleado();
             }
         })
         
@@ -56,7 +64,7 @@ const getEmpleados = async (setEmpleados) => {
 }
 
 const EmpleadosTabComponent = ({updateEmpleadoId,updateEmpleadoCedula,updateEmpleadoNombre,updateEmpleadoDireccion,
-    updateEmpleadoTelefono,updateEmpleadoCorreo}) => {
+    updateEmpleadoTelefono,updateEmpleadoCorreo,updateEmpleadoUsuario, updateEmpleado}) => {
 
 
     const empleado = useSelector(state => state.empleado)
@@ -77,15 +85,23 @@ const EmpleadosTabComponent = ({updateEmpleadoId,updateEmpleadoCedula,updateEmpl
 
         <div className='row mt-5 mx-0'>
             <div className="col-6 p-0">
-                <form onSubmit={ev => doUpdateEmpleado(ev,setEmpleados)}>
+                <form onSubmit={ev => doUpdateEmpleado(ev,setEmpleados,updateEmpleado,empleado)}>
                     <div className="row form-empleados mx-0">
-                        <div className="col-3 p-0">
-                            <label htmlFor="id">ID</label>
-                        </div>
-                        <div className="col-9 p-0">
-                            <input id='empleado_id' type="text" name='id' 
-                            value={empleado.empleado_id} readOnly/>
-                        </div>
+                        {
+                            newEmpleado ? 
+                            <>
+                            </>
+                            :
+                            <>
+                            <div className="col-3 p-0">
+                                <label htmlFor="id">ID</label>
+                            </div>
+                            <div className="col-9 p-0">
+                                <input id='empleado_id' type="text" name='id' 
+                                value={empleado.empleado_id} readOnly/>
+                            </div>
+                            </>
+                        }
                         <div className="col-3 p-0">
                             <label htmlFor="cedula">Cédula</label>
                         </div>
@@ -131,10 +147,33 @@ const EmpleadosTabComponent = ({updateEmpleadoId,updateEmpleadoCedula,updateEmpl
                             onChange={ev => updateEmpleadoTelefono(empleado,ev.currentTarget.value)}
                             required/>
                         </div>
+                        {
+                            newEmpleado ? 
+                            <>
+                            <div className="col-3 p-0">
+                                <label htmlFor="usuario">Usuario</label>
+                            </div>
+                            <div className="col-9 p-0">
+                                <input  id='empleado_usuario' type="text" name='usuario' 
+                                value={empleado.usuario} 
+                                onChange={ev => updateEmpleadoUsuario(empleado,ev.currentTarget.value)}
+                                required/>
+                            </div>
+                            </>
+                            :  
+                            <></>                          
+                        }
                     </div>
                     <div className='mt-3'>
                         <button className='btn-action' 
-                        onClick={ev => doUpdateEmpleado(ev,setEmpleados)}>
+                        onClick={ev => {
+                            newEmpleado ?
+                            doCreateEmpleado(ev,setEmpleados,updateEmpleado,empleado)
+                            :
+                            doUpdateEmpleado(ev,setEmpleados,updateEmpleado,empleado)
+                        }}
+
+                        >
                             {newEmpleado ? 'Crear' : 'Guardar cambios'}
                         </button>
                     </div>
@@ -144,7 +183,9 @@ const EmpleadosTabComponent = ({updateEmpleadoId,updateEmpleadoCedula,updateEmpl
                 <div className='d-flex flex-column gap-3'>
                     <div>
                         <button className='btn-action'
-                            onClick={ev => setNewEmpleado(!newEmpleado)}>
+                            onClick={ev => {updateEmpleado();setNewEmpleado(!newEmpleado)}}
+                            
+                            >
                             {newEmpleado ? 'Editar empleado' : 'Nuevo empleado'}
                         </button>
                     </div>
@@ -189,6 +230,22 @@ const mapToDispatchToProps = (dispatch) => {
             const newEmpleadoState = {...empleado};
             newEmpleadoState.correo = value;
             dispatch(updateEmpleado(newEmpleadoState));
+        },
+        updateEmpleadoUsuario : (empleado,value) => {
+            const newEmpleadoState = {...empleado};
+            newEmpleadoState.usuario = value;
+            dispatch(updateEmpleado(newEmpleadoState));
+        },
+        updateEmpleado : () => {
+            dispatch(updateEmpleado({
+                empleado_id: '',
+                cedula: '',
+                nombre: '',
+                direccion: '',
+                telefono: '',
+                usuario: '',
+                correo: ''
+            }))
         }
     }
 }

@@ -47,3 +47,19 @@ export const doPutEmpleadosRequest = async (empleado_id, empleadoDTO) => {
         .then(response => response.json())
         .then(json => json)
 }
+
+export const doPostEmpleadosRequest = async (empleadoDTO) => {
+    const api = getAPI();
+    const url = api.url+api.endpoints.empleados;
+    const config = {
+        method: 'POST',
+        headers: {
+            'Authorization': 'Bearer '+getToken(),
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(empleadoDTO)
+    }
+    return fetch(url, config)
+        .then(response => response.json())
+        .then(json => json)
+}
