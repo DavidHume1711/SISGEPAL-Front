@@ -9,3 +9,11 @@ input {
 .blue_cl {
     color: #0F43F9;
 }
+
+/*ICONS*/
+.action-icon {
+    cursor: pointer;
+}
+.btn-action {
+    width: 10rem;
+}

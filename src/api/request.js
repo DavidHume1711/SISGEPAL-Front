@@ -31,3 +31,19 @@ export const doGetEmpleadosRequest = async () => {
         .then(response => response.json())
         .then(json => json)
 }
+
+export const doPutEmpleadosRequest = async (empleado_id, empleadoDTO) => {
+    const api = getAPI();
+    const url = api.url+api.endpoints.empleados+`/${empleado_id}`;
+    const config = {
+        method: 'PUT',
+        headers: {
+            'Authorization': 'Bearer '+getToken(),
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(empleadoDTO)
+    }
+    return fetch(url, config)
+        .then(response => response.json())
+        .then(json => json)
+}

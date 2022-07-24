@@ -1,17 +1,14 @@
 import * as React from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+import deleteIcon from './images/delete.png'
+import editIcon from './images/edit.png'
 import { connect } from 'react-redux';
 import { updateEmpleado } from '../../react_redux/slices/empleadoSlice';
 
-const onSelectEmpleado = (ev, dispatch) => {
+const onSelectEmpleado = (empleado_id,cedula, dispatch) => {
+
   const dataEmp = [];
-  ev.querySelectorAll("td").forEach((tdEmpleado,index) => {
+  const row = document.getElementById(`${empleado_id}-${cedula}`);
+  row.querySelectorAll("td").forEach((tdEmpleado,index) => {
     dataEmp[index] = tdEmpleado.innerText ;
   });
   const newEmpleadoState = {
@@ -29,39 +26,51 @@ const onSelectEmpleado = (ev, dispatch) => {
  function EmpleadosTableComponent(props) {
   const empleados = props.empleados;
   return (
-      <TableContainer component={Paper}>
-        <Table sx={{ maxWidth: '100%'}} aria-label="simple table">
-          <TableHead >
-            <TableRow>
-              <TableCell align="center">ID</TableCell>
-              <TableCell align="center">CÉDULA</TableCell>
-              <TableCell align="center">NOMBRE</TableCell>
-              <TableCell align="center">CORREO</TableCell>
-              <TableCell align="center">DIRECCIÓN</TableCell>
-              <TableCell align="center">TELÉFONO</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
+
+      <table className='text-center w-100'>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>CÉDULA</th>
+            <th>NOMBRE</th>
+            <th>CORREO</th>
+            <th>DIRECCIÓN</th>
+            <th>TELÉFONO</th>
+            <th>ACCIONES</th>
+          </tr>
+        </thead>
+        <tbody>
             {empleados.map((row) => (
-              <TableRow
+              <tr
                 key={row.empleado_id}
-                id= {row.empleado_id}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                onClick={ev => onSelectEmpleado(ev.currentTarget, props.updateEmpleado)}
+                id= {`${row.empleado_id}-${row.cedula}`}
+                className='text-start'
               >
-                <TableCell align="center">
-                  {row.empleado_id}
-                </TableCell>
-                <TableCell align="center">{row.cedula}</TableCell>
-                <TableCell align="center">{row.nombre}</TableCell>
-                <TableCell align="center">{row.correo}</TableCell>
-                <TableCell align="center">{row.direccion}</TableCell>
-                <TableCell align="center">{row.telefono}</TableCell>
-              </TableRow>
+                <td>{row.empleado_id}</td>
+                <td>{row.cedula}</td>
+                <td>{row.nombre}</td>
+                <td>{row.correo}</td>
+                <td>{row.direccion}</td>
+                <td>{row.telefono}</td>
+                <td>
+                  <div className="d-flex gap-2 justify-content-center align-items-center">
+                    <div>
+                      <img src={editIcon} alt="" 
+                      onClick={ev => onSelectEmpleado(row.empleado_id,row.cedula, props.updateEmpleado)}
+                      className='action-icon'/>
+                    </div>
+                    <div>
+                      <img src={deleteIcon} alt="" 
+                      className='action-icon'/>
+                    </div>
+                  </div>
+                </td>
+              </tr>
             ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+        </tbody>
+      </table>
+    
+    
   );
 }
 

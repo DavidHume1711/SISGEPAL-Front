@@ -1,3 +1,12 @@
 .form-container {
     max-width: 30rem;
 }
+
+.form-empleados {
+    max-width: 25rem;
+}
+
+.form-empleados input {
+    width: 100%;
+}
+

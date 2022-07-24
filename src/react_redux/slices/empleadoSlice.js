@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { getToken, decodeToken } from "../../utils";
 
 const initialState = {
-    empleado_id: 0,
+    empleado_id: '',
     cedula: '',
     nombre: '',
     direccion: '',

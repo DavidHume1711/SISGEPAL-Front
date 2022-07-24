@@ -3,7 +3,7 @@ import { EmpresaTabComponent } from "../empresaTabComponent/empresaTabComponent"
 import { ClientesTabComponent } from "../clientesTabComponent/clientesTabComponent";
 import { ProveedoresTabComponent } from "../proveedoresTabComponent/proveedoresTabComponent";
 import { ProductosTabComponent } from "../productosTabComponent/productosTabComponent";
-import { EmpleadosTabComponent } from "../empleadosTabComponent/empleadosTabComponent";
+import EmpleadosTabComponent from "../empleadosTabComponent/empleadosTabComponent";
 import { Box } from "@mui/material";
 import { Tab } from "@mui/material";
 import { Tabs } from "@mui/material";
