@@ -23,10 +23,10 @@ const onSelectEmpleado = (empleado_id,cedula, dispatch) => {
   dispatch(newEmpleadoState);
 }
 
- function EmpleadosTableComponent(props) {
-  const empleados = props.empleados;
+ function EmpleadosTableComponent({empleados,enable,updateEmpleado}) {
   return (
 
+  <div className='container-table'>
       <table className='text-center w-100'>
         <thead>
           <tr>
@@ -53,10 +53,10 @@ const onSelectEmpleado = (empleado_id,cedula, dispatch) => {
                 <td>{row.direccion}</td>
                 <td>{row.telefono}</td>
                 <td>
-                  <div className="d-flex gap-2 justify-content-center align-items-center">
+                  <div className={`d-flex gap-2 justify-content-center align-items-center ${enable? '':'disable-actions'}`}>
                     <div>
                       <img src={editIcon} alt="" 
-                      onClick={ev => onSelectEmpleado(row.empleado_id,row.cedula, props.updateEmpleado)}
+                      onClick={ev => onSelectEmpleado(row.empleado_id,row.cedula, updateEmpleado)}
                       className='action-icon'/>
                     </div>
                     <div>
@@ -69,6 +69,7 @@ const onSelectEmpleado = (empleado_id,cedula, dispatch) => {
             ))}
         </tbody>
       </table>
+  </div>
     
     
   );

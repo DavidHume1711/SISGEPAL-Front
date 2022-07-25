@@ -17,3 +17,33 @@ input {
 .btn-action {
     width: 10rem;
 }
+
+/*TABLES*/
+
+.disable-actions {
+    opacity: 0.2;
+    pointer-events: none;
+}
+
+td, th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+tr:nth-child(even){background-color: #f2f2f2;}
+  
+tr:hover {background-color: #ddd;}
+
+th {
+    position:sticky;
+    top: 0;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    background-color: #04AA6D;
+    color: white;
+    z-index: 100;
+}
+.container-table {
+    height:10rem;
+    overflow-y: scroll;
+}

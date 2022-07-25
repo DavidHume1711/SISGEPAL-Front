@@ -18,11 +18,11 @@ export const PrincipalComponent = () => {
   return (
     <>
       <div className="container">
-        <div className="text-center mt-5 blue_cl">
+        <div className="text-center py-4 blue_cl">
           <h1>PAPELERÍA SAS</h1>
         </div>
 
-        <div className="container-sections mt-4">
+        <div className="container-sections">
           <TabContext value={currentTab}>
             <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
               <Tabs

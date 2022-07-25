@@ -6,21 +6,28 @@ import EmpleadosTableComponent from '../empleadosTableComponent/empleadosTableCo
 import {useSelector} from 'react-redux'
 import { connect } from 'react-redux/es/exports';
 import { updateEmpleado } from '../../react_redux/slices/empleadoSlice';
-
-
-const doUpdateEmpleado = async(ev,setEmpleados, updateEmpleado,empleado) => {
-    const {id,cedula,nombre,correo,direccion,telefono} = empleado;
-
-    if(id && cedula && nombre && correo && direccion && telefono){  
+import { removeSession } from '../../react_redux/slices/sessionSlide';
+import { removeToken } from '../../utils';
+const doUpdateEmpleado = async(ev,setEmpleados, updateEmpleado,empleado,removeSession) => {
+    const {empleado_id,cedula,nombre,correo,direccion,telefono} = empleado;
+    if(empleado_id && cedula && nombre && correo && direccion && telefono){  
         ev.preventDefault();
         
         const empleado_dto  = {cedula,nombre,correo,direccion,telefono}
-        doPutEmpleadosRequest(id,empleado_dto)
-        .then(res => {
-            if(res) {
+        doPutEmpleadosRequest(empleado_id,empleado_dto)
+        .then(({status,data}) => {
+            const {error} = data;
+            if(!error) {
                 getEmpleados(setEmpleados);
-                alert(`SE ACTUALIZÓ EL EMPLEADO CON ID ${id}`);
+                alert(`SE ACTUALIZÓ EL EMPLEADO CON ID ${empleado_id}`);
                 updateEmpleado();
+            }else {
+                if(status === 403){
+                    removeToken(removeSession)
+                    return;
+                }
+                
+                alert(`OCURRIÓ EL SIGUIENTE ERROR. Código: ${status}. Error: ${error}`)
             }
         })
         
@@ -29,7 +36,7 @@ const doUpdateEmpleado = async(ev,setEmpleados, updateEmpleado,empleado) => {
 
 }
 
-const doCreateEmpleado = async(ev,setEmpleados,updateEmpleado, empleado) => {
+const doCreateEmpleado = async(ev,setEmpleados,updateEmpleado, empleado,removeSession) => {
     const {cedula,nombre,correo,direccion,telefono,usuario} = empleado;
     
     if(cedula && nombre && correo && direccion && telefono && usuario){  
@@ -37,11 +44,19 @@ const doCreateEmpleado = async(ev,setEmpleados,updateEmpleado, empleado) => {
         
         const empleado_dto  = {cedula,nombre,correo,direccion,telefono,username: usuario}
         doPostEmpleadosRequest(empleado_dto)
-        .then(({empleado_id}) => {
-            if(empleado_id) {
+        .then(({status,data}) => {
+            const {empleado_id,error} = data;
+            if(!error) {
                 getEmpleados(setEmpleados);
                 alert(`SE CRÉO EL EMPLEADO Y LE FUE ASIGNADO EL ID ${empleado_id}`);
                 updateEmpleado();
+            }else {
+                if(status === 403){
+                    removeToken(removeSession)
+                    return;
+                }
+                
+                alert(`OCURRIÓ EL SIGUIENTE ERROR. Código: ${status}. Error: ${error}`)
             }
         })
         
@@ -50,20 +65,27 @@ const doCreateEmpleado = async(ev,setEmpleados,updateEmpleado, empleado) => {
 
 }
 
-const getEmpleados = async (setEmpleados) => {
-    doGetEmpleadosRequest().then(({empleados,error})  => {
+const getEmpleados = async (setEmpleados, removeSession) => {
+    doGetEmpleadosRequest().then(({status,data})  => {
+        const {empleados,error} = data;
         if(!error) {
             if(empleados) {
                 setEmpleados(empleados);
             }
         }else {
-            alert(error);
+            if(status === 403){
+                removeToken(removeSession)
+                return;
+            }
+            
+            alert(`OCURRIÓ UN ERROR INESPERADO. Código: ${status}. Error: ${error}`)
+
         }
         
-    })
+    }).catch(e=>console.log(e))
 }
 
-const EmpleadosTabComponent = ({updateEmpleadoId,updateEmpleadoCedula,updateEmpleadoNombre,updateEmpleadoDireccion,
+const EmpleadosTabComponent = ({removeSession,updateEmpleadoCedula,updateEmpleadoNombre,updateEmpleadoDireccion,
     updateEmpleadoTelefono,updateEmpleadoCorreo,updateEmpleadoUsuario, updateEmpleado}) => {
 
 
@@ -73,19 +95,24 @@ const EmpleadosTabComponent = ({updateEmpleadoId,updateEmpleadoCedula,updateEmpl
 
 
     useEffect(()=>{
-        getEmpleados(setEmpleados);
+        getEmpleados(setEmpleados, removeSession);
     },[])
 
     return (
         <>
         {empleados ? 
-            <EmpleadosTableComponent empleados={empleados}></EmpleadosTableComponent>
+            <EmpleadosTableComponent empleados={empleados} enable={!newEmpleado}></EmpleadosTableComponent>
             :
         <></>}
 
         <div className='row mt-5 mx-0'>
             <div className="col-6 p-0">
-                <form onSubmit={ev => doUpdateEmpleado(ev,setEmpleados,updateEmpleado,empleado)}>
+                <form onSubmit={ev => {
+                            newEmpleado ?
+                            doCreateEmpleado(ev,setEmpleados,updateEmpleado,empleado,removeSession)
+                            :
+                            doUpdateEmpleado(ev,setEmpleados,updateEmpleado,empleado,removeSession)
+                        }}>
                     <div className="row form-empleados mx-0">
                         {
                             newEmpleado ? 
@@ -167,10 +194,11 @@ const EmpleadosTabComponent = ({updateEmpleadoId,updateEmpleadoCedula,updateEmpl
                     <div className='mt-3'>
                         <button className='btn-action' 
                         onClick={ev => {
+                            console.log("EV")
                             newEmpleado ?
-                            doCreateEmpleado(ev,setEmpleados,updateEmpleado,empleado)
+                            doCreateEmpleado(ev,setEmpleados,updateEmpleado,empleado,removeSession)
                             :
-                            doUpdateEmpleado(ev,setEmpleados,updateEmpleado,empleado)
+                            doUpdateEmpleado(ev,setEmpleados,updateEmpleado,empleado,removeSession)
                         }}
 
                         >
@@ -201,6 +229,9 @@ const EmpleadosTabComponent = ({updateEmpleadoId,updateEmpleadoCedula,updateEmpl
 
 const mapToDispatchToProps = (dispatch) => {
     return {
+        removeSession: () => {
+            dispatch(removeSession())
+        },
         updateEmpleadoId : (empleado,value) => {
             const newEmpleadoState = {...empleado};
             newEmpleadoState.empleado_id = value;

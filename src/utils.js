@@ -14,5 +14,10 @@ export const decodeToken = () => {
     }
 
     return null;
-    
+}
+
+export const removeToken = removeSession => {
+    window.localStorage.removeItem('sisgepal-token');
+    alert("Su sesión ha terminado. Inicie sesión de nuevo.");
+    removeSession();
 }
