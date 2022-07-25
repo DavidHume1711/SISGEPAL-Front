@@ -76,3 +76,18 @@ export const doPostEmpleadosRequest = async (empleadoDTO) => {
         response => doPromiseAfterFetch(response))
     .catch(e => console.log("ERROR EN POST EMPLEADOS REQUEST"))
 }
+
+export const doDeleteEmpleadoRequest = async (empleado_id) => {
+    const api = getAPI();
+    const url = api.url+api.endpoints.empleados+`/${empleado_id}`;
+    const config = {
+        method: 'DELETE',
+        headers: {
+            'Authorization': 'Bearer '+getToken()
+        }
+    }
+    return fetch(url, config)
+    .then(
+        response => doPromiseAfterFetch(response))
+    .catch(e => console.log("ERROR EN DELETE EMPLEADOS REQUEST"))    
+}

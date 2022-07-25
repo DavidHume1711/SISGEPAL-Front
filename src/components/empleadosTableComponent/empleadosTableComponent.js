@@ -3,7 +3,9 @@ import deleteIcon from './images/delete.png'
 import editIcon from './images/edit.png'
 import { connect } from 'react-redux';
 import { updateEmpleado } from '../../react_redux/slices/empleadoSlice';
-
+import { doDeleteEmpleadoRequest } from '../../api/request';
+import { removeToken } from '../../utils';
+import { removeSession } from '../../react_redux/slices/sessionSlide';
 const onSelectEmpleado = (empleado_id,cedula, dispatch) => {
 
   const dataEmp = [];
@@ -23,7 +25,29 @@ const onSelectEmpleado = (empleado_id,cedula, dispatch) => {
   dispatch(newEmpleadoState);
 }
 
- function EmpleadosTableComponent({empleados,enable,updateEmpleado}) {
+const onRemoveEmpleado = (empleado_id, removeSession,updateRows) => {
+
+  const confirmAction = window.confirm(`¿Está seguro de elminar el empleado con id ${empleado_id}?`);
+  if (confirmAction) {
+    doDeleteEmpleadoRequest(empleado_id)
+    .then(({status,data}) => {
+      const {error,empleado_id} = data;
+      if(!error) {
+        updateRows();
+        alert(`Se eliminó satisfactoriamente el empleado con id ${empleado_id}`);
+      }else {
+        if(status === 403){
+          removeToken(removeSession)
+          return;
+      }
+      
+      alert(`OCURRIÓ EL SIGUIENTE ERROR. Código: ${status}. Error: ${error}`)
+      }
+    })
+  }
+}
+
+ function EmpleadosTableComponent({empleados,enable,updateEmpleado,removeSession,updateRows}) {
   return (
 
   <div className='container-table'>
@@ -61,6 +85,7 @@ const onSelectEmpleado = (empleado_id,cedula, dispatch) => {
                     </div>
                     <div>
                       <img src={deleteIcon} alt="" 
+                      onClick={ev => onRemoveEmpleado(row.empleado_id,removeSession,updateRows)}
                       className='action-icon'/>
                     </div>
                   </div>
@@ -77,6 +102,9 @@ const onSelectEmpleado = (empleado_id,cedula, dispatch) => {
 
 const mapToDispathToProps = (dispatcher) => {
   return {
+    removeSession: () => {
+      dispatcher(removeSession())
+    },
     updateEmpleado : (payload) => dispatcher(updateEmpleado(payload))
   }
 }

@@ -8,6 +8,7 @@ import { connect } from 'react-redux/es/exports';
 import { updateEmpleado } from '../../react_redux/slices/empleadoSlice';
 import { removeSession } from '../../react_redux/slices/sessionSlide';
 import { removeToken } from '../../utils';
+
 const doUpdateEmpleado = async(ev,setEmpleados, updateEmpleado,empleado,removeSession) => {
     const {empleado_id,cedula,nombre,correo,direccion,telefono} = empleado;
     if(empleado_id && cedula && nombre && correo && direccion && telefono){  
@@ -101,7 +102,10 @@ const EmpleadosTabComponent = ({removeSession,updateEmpleadoCedula,updateEmplead
     return (
         <>
         {empleados ? 
-            <EmpleadosTableComponent empleados={empleados} enable={!newEmpleado}></EmpleadosTableComponent>
+            <EmpleadosTableComponent empleados={empleados} enable={!newEmpleado} 
+            updateRows={()=>{getEmpleados(setEmpleados,removeSession)}}>
+
+            </EmpleadosTableComponent>
             :
         <></>}
 
