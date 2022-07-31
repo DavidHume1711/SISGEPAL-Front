@@ -12,7 +12,6 @@ export const decodeToken = () => {
   if (typeof getToken() != "object") {
     return jwtDecode(getToken());
   }
-
   return null;
 };
 

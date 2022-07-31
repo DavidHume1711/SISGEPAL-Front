@@ -1,6 +1,6 @@
 import "./principalComponent.css";
 import { EmpresaTabComponent } from "../empresaTabComponent/empresaTabComponent";
-import { ClientesTabComponent } from "../clientesTabComponent/clientesTabComponent";
+import ClientesTabComponent from "../clientesTabComponent/clientesTabComponent";
 import ProveedoresTabComponent from "../proveedoresTabComponent/proveedoresTabComponent";
 import ProductosTabComponent from "../productosTabComponent/productosTabComponent";
 import EmpleadosTabComponent from "../empleadosTabComponent/empleadosTabComponent";

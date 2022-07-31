@@ -2,5 +2,6 @@
   "session": "/session",
   "empleados": "/empleados",
   "proveedores": "/proveedores",
-  "productos": "/productos"
+  "productos": "/productos",
+  "clientes": "/clientes"
 }

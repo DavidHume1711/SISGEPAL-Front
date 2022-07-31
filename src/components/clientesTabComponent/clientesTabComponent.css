@@ -1,0 +1,11 @@
+.form-container {
+    max-width: 30rem;
+}
+
+.form-clientes {
+    max-width: 25rem;
+}
+
+.form-clientes input {
+    width: 100%;
+}

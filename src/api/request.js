@@ -206,3 +206,67 @@ export const doDeleteProductosRequest = async (producto_id) => {
       .then((response) => doPromiseAfterFetch(response))
       .catch((e) => console.log("ERROR EN DELETE PRODUCTOS REQUEST"));
 };
+
+export const doGetClientesRequest = async () => {
+    const api = getAPI();
+    const url = api.url+api.endpoints.clientes;
+    const config = {
+        method: 'GET',
+        headers: {
+            'Authorization': 'Bearer '+getToken()
+        }
+    }
+    return fetch(url, config)
+        .then(
+            (response) => doPromiseAfterFetch(response))
+        .catch((e) => console.log("ERROR EN GET CLIENTE REQUEST"))
+}
+
+export const doPutClientesRequest = async (cliente_id, clienteDTO) => {
+    const api = getAPI();
+    const url = api.url+api.endpoints.clientes+`/${cliente_id}`;
+    const config = {
+        method: 'PUT',
+        headers: {
+            'Authorization': 'Bearer '+getToken(),
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(clienteDTO)
+    }
+    return fetch(url, config)
+    .then(
+        (response) => doPromiseAfterFetch(response))
+    .catch((e) => console.log("ERROR EN PUT CLIENTE REQUEST"))
+}
+
+export const doPostClientesRequest = async (clienteDTO) => {
+    const api = getAPI();
+    const url = api.url+api.endpoints.clientes;
+    const config = {
+        method: 'POST',
+        headers: {
+            'Authorization': 'Bearer '+getToken(),
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(clienteDTO)
+    }
+    return fetch(url, config)
+    .then(
+        (response) => doPromiseAfterFetch(response))
+    .catch((e) => console.log("ERROR EN POST CLIENTE REQUEST"))
+}
+
+export const doDeleteClientesRequest = async (cliente_id) => {
+    const api = getAPI();
+    const url = api.url+api.endpoints.clientes+`/${cliente_id}`;
+    const config = {
+        method: 'DELETE',
+        headers: {
+            'Authorization': 'Bearer '+getToken()
+        }
+    }
+    return fetch(url, config)
+    .then(
+        (response) => doPromiseAfterFetch(response))
+    .catch((e) => console.log("ERROR EN DELETE CLIENTE REQUEST"))    
+}
