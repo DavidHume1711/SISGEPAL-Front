@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getToken, decodeToken } from "../../utils";
 
-const initialState = {
+export const initialStateProducto = {
   producto_id: "",
   codigo_producto: "",
   proveedor_id: "",
@@ -13,7 +13,7 @@ const initialState = {
 
 export const productoSlice = createSlice({
     name: "producto",
-    initialState,
+    initialState: initialStateProducto,
     reducers: {
       updateProducto: (
         state,

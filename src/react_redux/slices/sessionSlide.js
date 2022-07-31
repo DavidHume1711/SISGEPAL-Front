@@ -8,10 +8,10 @@ const setInitialState = () => {
     user: isSession ? decodeToken(token) : null,
   };
 };
-const initialState = setInitialState();
+export const initialStateSession = setInitialState();
 export const sessionSlice = createSlice({
   name: "session",
-  initialState,
+  initialState: initialStateSession,
   reducers: {
     updateSession: (state, { payload: { isSession, user } }) => {
       state.isSession = true;

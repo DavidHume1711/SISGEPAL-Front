@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getToken, decodeToken } from "../../utils";
 
-const initialState = {
+export const initialStateEmpleado = {
     empleado_id: '',
     cedula: '',
     nombre: '',
@@ -12,7 +12,7 @@ const initialState = {
 }
 export const empleadoSlice = createSlice({
     name: 'empleado',
-    initialState,
+    initialState: initialStateEmpleado,
     reducers : {
         updateEmpleado: (state, {payload: {empleado_id, cedula,nombre,direccion,telefono,correo,usuario}}) => {
             state.empleado_id = empleado_id;

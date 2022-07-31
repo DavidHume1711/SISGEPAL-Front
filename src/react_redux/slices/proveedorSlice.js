@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getToken, decodeToken } from "../../utils";
 
-const initialState = {
+export const initialStateProveedor = {
   proveedor_id: "",
   nit: "",
   nombre: "",
@@ -12,7 +12,7 @@ const initialState = {
 };
 export const proveedorSlice = createSlice({
   name: "proveedor",
-  initialState,
+  initialState: initialStateProveedor,
   reducers: {
     updateProveedor: (
       state,

@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getToken, decodeToken } from "../../utils";
 
-const initialState = {
+export const initialStateCliente = {
     cliente_id: '',
     cedula: '',
     nombre: '',
@@ -12,7 +12,7 @@ const initialState = {
 }
 export const clienteSlice = createSlice({
     name: 'cliente',
-    initialState,
+    initialState: initialStateCliente,
     reducers : {
         updateCliente: (state, {payload: {cliente_id, cedula,nombre,direccion,telefono,correo,usuario}}) => {
             state.cliente_id = cliente_id;

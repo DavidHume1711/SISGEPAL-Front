@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { doGetClientesRequest, doPutClientesRequest, doPostClientesRequest } from '../../api/request';
 import ClientesTableComponent from '../clientesTableComponent/clientesTableComponent';
-import {useSelector} from 'react-redux'
+import {useSelector} from 'react-redux';
 import { connect } from 'react-redux/es/exports';
 import { updateCliente } from '../../react_redux/slices/clienteSlice';
 import { removeSession } from '../../react_redux/slices/sessionSlide';
