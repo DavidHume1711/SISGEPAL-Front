@@ -23,6 +23,8 @@ jobs:
         
       - uses: akhileshns/heroku-deploy@v3.12.12
         with:
-          heroku_api_key: "fbbe505f-6961-43e0-b58e-599a5e7f505b"
+          heroku_api_key: fbbe505f-6961-43e0-b58e-599a5e7f505b
           heroku_app_name: "sisgepal-front-test" 
-          heroku_email: "kevin.cancimanse@correounivalle.edu.co"
+          heroku_email: "kevin.cancimanse@correounivalle.edu.co",
+          branch: "develop",
+          remote_branch: "develop"
