@@ -1,5 +1,6 @@
 {
   "session": "/session",
   "empleados": "/empleados",
-  "proveedores": "/proveedores"
+  "proveedores": "/proveedores",
+  "productos": "/productos"
 }

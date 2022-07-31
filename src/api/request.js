@@ -146,3 +146,63 @@ export const doDeleteProveedoresRequest = async (proveedor_id) => {
     .then((response) => doPromiseAfterFetch(response))
     .catch((e) => console.log("ERROR EN DELETE PROVEEDORES REQUEST"));
 };
+
+export const doGetProductosRequest = async () => {
+    const api = getAPI();
+    const url = api.url + api.endpoints.productos;
+    const config = {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + getToken(),
+      },
+    };
+    return fetch(url, config)
+      .then((response) => doPromiseAfterFetch(response))
+      .catch((e) => console.log("ERROR EN GET PRODUCTOS REQUEST"));
+};
+
+export const doPutProductosRequest = async (producto_id, productoDTO) => {
+    const api = getAPI();
+    const url = api.url + api.endpoints.productos + `/${producto_id}`;
+    const config = {
+      method: "PUT",
+      headers: {
+        Authorization: "Bearer " + getToken(),
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(productoDTO),
+    };
+    return fetch(url, config)
+      .then((response) => doPromiseAfterFetch(response))
+      .catch((e) => console.log("ERROR EN PUT PRODUCTOS REQUEST"));
+};
+
+export const doPostProductosRequest = async (productoDTO) => {
+    const api = getAPI();
+    const url = api.url + api.endpoints.productos;
+    const config = {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + getToken(),
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(productoDTO),
+    };
+    return fetch(url, config)
+      .then((response) => doPromiseAfterFetch(response))
+      .catch((e) => console.log("ERROR EN POST PRODUCTOS REQUEST"));
+};
+  
+export const doDeleteProductosRequest = async (producto_id) => {
+    const api = getAPI();
+    const url = api.url + api.endpoints.productos + `/${producto_id}`;
+    const config = {
+      method: "DELETE",
+      headers: {
+        Authorization: "Bearer " + getToken(),
+      },
+    };
+    return fetch(url, config)
+      .then((response) => doPromiseAfterFetch(response))
+      .catch((e) => console.log("ERROR EN DELETE PRODUCTOS REQUEST"));
+};

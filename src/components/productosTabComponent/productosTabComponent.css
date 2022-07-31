@@ -1,0 +1,11 @@
+.form-container {
+    max-width: 30rem;
+}
+
+.form-productos {
+    max-width: 25rem;
+}
+
+.form-productos input {
+    width: 100%;
+}

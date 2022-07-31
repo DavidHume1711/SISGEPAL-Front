@@ -2,10 +2,10 @@ import "./principalComponent.css";
 import { EmpresaTabComponent } from "../empresaTabComponent/empresaTabComponent";
 import { ClientesTabComponent } from "../clientesTabComponent/clientesTabComponent";
 import ProveedoresTabComponent from "../proveedoresTabComponent/proveedoresTabComponent";
-import { ProductosTabComponent } from "../productosTabComponent/productosTabComponent";
+import ProductosTabComponent from "../productosTabComponent/productosTabComponent";
 import EmpleadosTabComponent from "../empleadosTabComponent/empleadosTabComponent";
-import { Box } from "@mui/material";
-import { Tab } from "@mui/material";
+import { Box } from "@mui/material";  
+import { Tab } from "@mui/material";   //
 import { Tabs } from "@mui/material";
 import TabPanel from "@mui/lab/TabPanel";
 import TabContext from "@mui/lab/TabContext";
