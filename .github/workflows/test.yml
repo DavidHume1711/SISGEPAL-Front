@@ -26,3 +26,4 @@ jobs:
           heroku_api_key: ${{ secrets.HEROKU_QA_API_KEY }}
           heroku_app_name: "sisgepal-front-test" 
           heroku_email: "kevin.cancimanse@correounivalle.edu.co"
+          dontuseforce: 1
