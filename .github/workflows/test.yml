@@ -27,3 +27,4 @@ jobs:
           heroku_app_name: "sisgepal-front-test" 
           heroku_email: "kevin.cancimanse@correounivalle.edu.co"
           branch: "qa"
+          useforce: true
