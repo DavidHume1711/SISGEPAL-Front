@@ -1,11 +1,11 @@
 {
     "develop": {
-        "url": "http://localhost:8080"
+        "url": "https://sisgepal-back-test.herokuapp.com"
     },
     "test": {
-        "url": ""
+        "url": "https://sisgepal-back-test.herokuapp.com"
     },
     "production": {
-        "url": ""
+        "url": "https://sisgepal-back-test.herokuapp.com"
     }
 }
