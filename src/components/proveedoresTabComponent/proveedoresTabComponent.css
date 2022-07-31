@@ -1,0 +1,11 @@
+.form-container {
+  max-width: 30rem;
+}
+
+.form-proveedores {
+  max-width: 25rem;
+}
+
+.form-proveedores input {
+  width: 100%;
+}
