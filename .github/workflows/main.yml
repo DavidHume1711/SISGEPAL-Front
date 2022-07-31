@@ -1,0 +1,26 @@
+name: Test and deploy to QA
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+          
+      - name: Update and Upgrade ubuntu
+        run: | 
+          sudo apt-get update
+          sudo apt-get upgrade
+
+      - name: Run tests
+        run: npm run test
+        
+      - uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: "sisgepal-front" 
+          heroku_email: "dilan.bergano@correounivalle.edu.co"
+          branch: "main"
