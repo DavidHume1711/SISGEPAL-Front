@@ -281,7 +281,6 @@ const ProveedoresTabComponent = ({
               )}
             </div>
             <div className="mt-3">
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               <button
                 className="btn-action"
                 onClick={(ev) => {
@@ -305,20 +304,10 @@ const ProveedoresTabComponent = ({
               >
                 {newProveedor ? "Crear" : "Guardar cambios"}
               </button>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <button
-                className="btn-action"
-                onClick={(ev) => {
-                  updateProveedor();
-                  setNewProveedor(!newProveedor);
-                }}
-              >
-                {newProveedor ? "Editar proveedor" : "Nuevo proveedor"}
-              </button>
             </div>
           </form>
         </div>
-        {/* <div className="col-6 d-flex align-items-center">
+        <div className="col-6 d-flex align-items-center">
           <div className="d-flex flex-column gap-3">
             <div>
               <button
@@ -332,7 +321,7 @@ const ProveedoresTabComponent = ({
               </button>
             </div>
           </div>
-        </div> */}
+        </div>
       </div>
     </>
   );
