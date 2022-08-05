@@ -10,6 +10,7 @@ import ProveedoresTableComponent from "../proveedoresTableComponent/proveedoresT
 import { useSelector } from "react-redux";
 import { connect } from "react-redux/es/exports";
 import { updateProveedor } from "../../react_redux/slices/proveedorSlice";
+import { updateProveedores } from "../../react_redux/slices/proveedoresSlice";
 import { removeSession } from "../../react_redux/slices/sessionSlide";
 import { removeToken } from "../../utils";
 
@@ -18,7 +19,8 @@ const doUpdateProveedor = async (
   setProveedores,
   updateProveedor,
   proveedor,
-  removeSession
+  removeSession,
+  updateProveedores
 ) => {
   const { proveedor_id, nit, nombre, correo, direccion, telefono } = proveedor;
   if (proveedor_id && nit && nombre && correo && direccion && telefono) {
@@ -29,7 +31,7 @@ const doUpdateProveedor = async (
       ({ status, data }) => {
         const { error } = data;
         if (!error) {
-          getProveedores(setProveedores);
+          getProveedores(setProveedores,null,updateProveedores);
           alert(`SE ACTUALIZÓ EL PROVEEDOR CON ID ${proveedor_id}`);
           updateProveedor();
         } else {
@@ -70,7 +72,7 @@ const doCreateProveedor = async (
     doPostProveedoresRequest(proveedor_dto).then(({ status, data }) => {
       const { proveedor_id, error } = data;
       if (!error) {
-        getProveedores(setProveedores);
+        getProveedores(setProveedores, null, null);
         alert(`SE CRÉO EL PROVEEDOR Y LE FUE ASIGNADO EL ID ${proveedor_id}`);
         updateProveedor();
       } else {
@@ -85,12 +87,17 @@ const doCreateProveedor = async (
   }
 };
 
-const getProveedores = async (setProveedores, removeSession) => {
+const getProveedores = async (setProveedores, removeSession,updateProveedores) => {
   doGetProveedoresRequest()
     .then(({ status, data }) => {
       const { proveedores, error } = data;
       if (!error) {
         if (proveedores) {
+          if(updateProveedor != null) {
+            console.log(`VALOR DE UPDATE PROVEEDORES ${updateProveedores}`)
+            updateProveedores(proveedores);
+            
+          }
           setProveedores(proveedores);
         }
       } else {
@@ -116,13 +123,13 @@ const ProveedoresTabComponent = ({
   updateProveedorCorreo,
   //updateProveedorUsuario,
   updateProveedor,
+  updateProveedores
 }) => {
   const proveedor = useSelector((state) => state.proveedor);
   const [proveedores, setProveedores] = useState(null);
   const [newProveedor, setNewProveedor] = useState(false);
-
   useEffect(() => {
-    getProveedores(setProveedores, removeSession);
+    getProveedores(setProveedores, removeSession, updateProveedores);
   }, []);
 
   return (
@@ -132,7 +139,7 @@ const ProveedoresTabComponent = ({
           proveedores={proveedores}
           enable={!newProveedor}
           updateRows={() => {
-            getProveedores(setProveedores, removeSession);
+            getProveedores(setProveedores, removeSession, updateProveedores);
           }}
         ></ProveedoresTableComponent>
       ) : (
@@ -149,14 +156,16 @@ const ProveedoresTabComponent = ({
                     setProveedores,
                     updateProveedor,
                     proveedor,
-                    removeSession
+                    removeSession,
+                    updateProveedores
                   )
                 : doUpdateProveedor(
                     ev,
                     setProveedores,
                     updateProveedor,
                     proveedor,
-                    removeSession
+                    removeSession,
+                    updateProveedores
                   );
             }}
           >
@@ -291,14 +300,16 @@ const ProveedoresTabComponent = ({
                         setProveedores,
                         updateProveedor,
                         proveedor,
-                        removeSession
+                        removeSession,
+                        updateProveedores
                       )
                     : doUpdateProveedor(
                         ev,
                         setProveedores,
                         updateProveedor,
                         proveedor,
-                        removeSession
+                        removeSession,
+                        updateProveedores
                       );
                 }}
               >
@@ -329,6 +340,9 @@ const ProveedoresTabComponent = ({
 
 const mapToDispatchToProps = (dispatch) => {
   return {
+    updateProveedores: (proveedores) => {
+      dispatch(updateProveedores({proveedores}));
+    },
     removeSession: () => {
       dispatch(removeSession());
     },
