@@ -6,19 +6,21 @@ import { updateProducto } from "../../react_redux/slices/productoSlice";
 import { doDeleteProductosRequest } from "../../api/request";
 import { removeToken } from "../../utils";
 import { removeSession } from "../../react_redux/slices/sessionSlide";
+import { useSelector } from "react-redux";
+import { useRef } from "react";
 const onSelectProducto = (producto_id, codigo_producto, dispatch) => {
   const dataProd = [];  
   const row = document.getElementById(`${producto_id}-${codigo_producto}`);
   row.querySelectorAll("td").forEach((tdProducto, index) => {
-    dataProd[index] = tdProducto.innerText;
+    dataProd[index] = tdProducto;
   });
   const newProductoState = {
-    producto_id: dataProd[0],
-    codigo_producto: dataProd[1],
-    proveedor_id: dataProd[2],
-    nombre: dataProd[3],
-    stock: dataProd[4],
-    precio: dataProd[5],
+    producto_id: dataProd[0].innerText,
+    codigo_producto: dataProd[1].innerText,
+    proveedor_id: dataProd[2].id,
+    nombre: dataProd[3].innerText,
+    stock: dataProd[4].innerText,
+    precio: dataProd[5].innerText,
   };
   console.log(newProductoState);
   dispatch(newProductoState);
@@ -55,6 +57,8 @@ function ProductosTableComponent({
   removeSession,
   updateRows,
 }) {
+  const proveedores = useSelector(state => state.proveedores);
+
   return (
     <div className="container-table">
       <table className="text-center w-100">
@@ -62,7 +66,7 @@ function ProductosTableComponent({
           <tr>
             <th>ID</th>
             <th>CODIGO</th>
-            <th>PROVEEDOR ID</th>
+            <th>PROVEEDOR</th>
             <th>NOMBRE</th>
             <th>STOCK</th>
             <th>PRECIO</th>
@@ -78,7 +82,10 @@ function ProductosTableComponent({
             >
               <td>{row.producto_id}</td>
               <td>{row.codigo_producto}</td>
-              <td>{row.proveedor_id}</td>
+
+              <td id={proveedores.find(p => p.proveedor_id == row.proveedor_id).proveedor_id}>
+                {proveedores.find(p => p.proveedor_id == row.proveedor_id).nombre}
+                </td>
               <td>{row.nombre}</td>
               <td>{row.stock}</td>
               <td>{row.precio}</td>

@@ -1,6 +1,6 @@
 import './App.css';
 import { useSelector } from 'react-redux';
-import { PrincipalComponent } from './principalComponent/principalComponent';
+import PrincipalComponent  from './principalComponent/principalComponent';
 import LoginComponent  from './login/loginComponent';
 
 function App() {

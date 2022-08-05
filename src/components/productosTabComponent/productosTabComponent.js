@@ -12,6 +12,7 @@ import { connect } from "react-redux/es/exports";
 import { updateProducto } from "../../react_redux/slices/productoSlice";
 import { removeSession } from "../../react_redux/slices/sessionSlide";
 import { removeToken } from "../../utils";
+import { useRef } from "react";
 
 
 const doUpdateProducto = async(ev,setProductos, updateProducto,producto,removeSession) => {
@@ -92,8 +93,9 @@ const getProductos = async (setProductos, removeSession) => {
 const ProductosTabComponent = ({removeSession,updateProductoCodigo,updateProductoIdProveedor,updateProductoNombre,
   updateProductoStock,updateProductoPrecio,updateProducto}) => {
 
-
+  const selectProveedor = useRef(null);
   const producto = useSelector(state => state.producto)
+  const proveedores = useSelector(state => state.proveedores)
   const [productos, setProdutos] = useState(null);
   const [newProducto, setNewProducto] = useState(false);
 
@@ -149,10 +151,19 @@ const ProductosTabComponent = ({removeSession,updateProductoCodigo,updateProduct
                           <label htmlFor="proveedor">ID Proveedor</label>
                       </div>
                       <div className="col-9 p-0">
-                          <input  id='proveedor_id' type="text" name='proveedor' 
+                        <select name="proveedor" id="proveedor_id" className="w-100"
+                        onChange={ev => updateProductoIdProveedor(producto,ev.currentTarget.value)}>
+                            {proveedores.map(pro => {
+                                return <option value={pro.proveedor_id} 
+                                selected={pro.proveedor_id == producto.proveedor_id}>
+                                    {pro.nombre}
+                                </option>
+                            })}
+                        </select>
+                          {/* <input  id='proveedor_id' type="text" name='proveedor' 
                           value={producto.proveedor_id} 
                           onChange={ev => updateProductoIdProveedor(producto,ev.currentTarget.value)}
-                          required/>
+                          required/> */}
                       </div>
                       <div className="col-3 p-0">
                           <label htmlFor="nombre">Nombre</label>

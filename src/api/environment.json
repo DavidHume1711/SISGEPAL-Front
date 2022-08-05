@@ -1,6 +1,6 @@
 {
     "develop": {
-        "url": "https://sisgepal-back-test.herokuapp.com"
+        "url": "http://localhost:8080"
     },
     "test": {
         "url": "https://sisgepal-back-test.herokuapp.com"

@@ -11,8 +11,25 @@ import TabPanel from "@mui/lab/TabPanel";
 import TabContext from "@mui/lab/TabContext";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import {doGetProveedoresRequest} from '../../api/request'
+import { connect } from "react-redux";
+import {updateProveedores} from '../../react_redux/slices/proveedoresSlice'
+import { useEffect } from "react";
 
-export const PrincipalComponent = () => {
+const PrincipalComponent = ({updateProveedores}) => {
+
+
+  useEffect(()=> {
+
+    doGetProveedoresRequest().then(({data}) => {
+      console.log("SE OBTUVIERON LOS PROVEEDORES: ",data.proveedores)
+      updateProveedores(data.proveedores);
+    });
+  
+
+  },[])
+
+
   const {
     user: { authorities },
   } = useSelector((state) => state.session);
@@ -78,3 +95,13 @@ export const PrincipalComponent = () => {
     </>
   );
 };
+
+const mapToDispatchToProps = (dispatch) => {
+  return {
+    updateProveedores (proveedores) {
+      dispatch(updateProveedores({proveedores}));
+    }
+  }
+}
+
+export default connect(null, mapToDispatchToProps)(PrincipalComponent);
