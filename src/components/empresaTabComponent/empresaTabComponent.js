@@ -13,9 +13,12 @@ export const EmpresaTabComponent = () => {
                 <div>
                     <h2 className='mb-3'>DATOS DEL USUARIO</h2>
                     <div>
-                        <p><strong>NOMBRE</strong>{' '+user.nombre}</p>
-                        <p><strong>USUARIO</strong>:{' '+user.usuario}</p>
-                        <p><strong>CORREO</strong>{' '+user.correo}</p>
+                        <p><strong>NOMBRE: </strong>
+                        <span data-testid="user_nombre">{user.nombre}</span></p>
+                        <p><strong>USUARIO: </strong>
+                        <span data-testid="user_username">{user.usuario}</span></p>
+                        <p><strong>CORREO: </strong>
+                        <span data-testid="user_correo">{user.correo}</span></p>
                     </div>
                 </div>
                 <div>

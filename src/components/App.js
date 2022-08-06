@@ -5,7 +5,7 @@ import LoginComponent  from './login/loginComponent';
 
 function App() {
   const session = useSelector(store => store.session); 
-  console.log(session);
+  console.log("IS SESSION: "+session.isSession);
   const principalComponent = session.isSession ? 
   <PrincipalComponent></PrincipalComponent>
   :

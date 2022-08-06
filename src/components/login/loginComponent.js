@@ -40,7 +40,7 @@ const LoginComponent = (props) => {
 
     return <>
         <>
-            <div className="container container-form-principal ">
+            <div className="container container-form-principal " data-testid="container-login">
                 <form action="">
                     <div className="row">
                         <div className="col-6">

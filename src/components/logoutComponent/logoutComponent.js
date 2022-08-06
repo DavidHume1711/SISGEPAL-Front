@@ -2,7 +2,7 @@ import logout_icon from './logout_icon.png'
 import './logoutComponent.css'
 import { removeToken } from '../../utils'
 import { removeSession } from '../../react_redux/slices/sessionSlide'
-import { connect } from 'react-redux/es/exports'
+import { connect } from 'react-redux';
 
 const LogoutComponent = ({removeSession}) => {
 

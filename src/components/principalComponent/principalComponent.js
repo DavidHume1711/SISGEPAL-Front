@@ -48,13 +48,14 @@ const PrincipalComponent = ({updateProveedores}) => {
               <Tabs
                 onChange={(ev) => console.log(ev)}
                 aria-label="basic tabs example"
+                value={currentTab}
               >
-                <Tab label="Empresa" onClick={(ev) => setCurrentTab("0")} />
-                <Tab label="Clientes" onClick={(ev) => setCurrentTab("1")} />
-                <Tab label="Productos" onClick={(ev) => setCurrentTab("2")} />
-                <Tab label="Proveedores" onClick={(ev) => setCurrentTab("3")} />
+                <Tab value={"0"} label="Empresa" onClick={(ev) => setCurrentTab("0")} />
+                <Tab value={"1"} label="Clientes" onClick={(ev) => setCurrentTab("1")} />
+                <Tab value={"2"} label="Productos" onClick={(ev) => setCurrentTab("2")} />
+                <Tab value={"3"} label="Proveedores" onClick={(ev) => setCurrentTab("3")} />
                 {authorities.includes("ROLE_ADMIN") ? (
-                  <Tab label="Empleados" onClick={(ev) => setCurrentTab("4")} />
+                  <Tab value={"4"} label="Empleados" onClick={(ev) => setCurrentTab("4")} />
                 ) : (
                   <></>
                 )}
