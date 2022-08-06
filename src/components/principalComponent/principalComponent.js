@@ -15,7 +15,7 @@ import {doGetProveedoresRequest} from '../../api/request'
 import { connect } from "react-redux";
 import {updateProveedores} from '../../react_redux/slices/proveedoresSlice'
 import { useEffect } from "react";
-
+import LogoutComponent from '../logoutComponent/logoutComponent';
 const PrincipalComponent = ({updateProveedores}) => {
 
 
@@ -37,6 +37,7 @@ const PrincipalComponent = ({updateProveedores}) => {
   return (
     <>
       <div className="container">
+        <LogoutComponent></LogoutComponent>
         <div className="text-center py-4 blue_cl">
           <h1>PAPELERÍA SAS</h1>
         </div>
