@@ -31,7 +31,7 @@ const doUpdateProveedor = async (
       ({ status, data }) => {
         const { error } = data;
         if (!error) {
-          getProveedores(setProveedores,null,updateProveedores);
+          getProveedores(setProveedores,removeSession,updateProveedores);
           alert(`SE ACTUALIZÓ EL PROVEEDOR CON ID ${proveedor_id}`);
           updateProveedor();
         } else {
@@ -72,7 +72,7 @@ const doCreateProveedor = async (
     doPostProveedoresRequest(proveedor_dto).then(({ status, data }) => {
       const { proveedor_id, error } = data;
       if (!error) {
-        getProveedores(setProveedores, null, null);
+        getProveedores(setProveedores, null, updateProveedores);
         alert(`SE CRÉO EL PROVEEDOR Y LE FUE ASIGNADO EL ID ${proveedor_id}`);
         updateProveedor();
       } else {
