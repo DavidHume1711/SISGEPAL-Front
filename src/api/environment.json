@@ -6,6 +6,6 @@
         "url": "https://sisgepal-back-test.herokuapp.com"
     },
     "production": {
-        "url": "https://sisgepal-back-test.herokuapp.com"
+        "url": "https://sisgepal-back.herokuapp.com"
     }
 }
