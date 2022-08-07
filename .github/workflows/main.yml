@@ -26,10 +26,4 @@ jobs:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: "sisgepal-front" 
           heroku_email: "dilan.bergano@correounivalle.edu.co"
-          branch: "main"
-          justlogin: true
-      - run: |
-          heroku container:login
-          git add .
-          git commit -m "Deploy to prod"
-          git push heroku main --force
+          
